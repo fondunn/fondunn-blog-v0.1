@@ -1,0 +1,5 @@
+1) compose
+2) save new posts
+3) fix css
+4) @media
+5) fix speed 
