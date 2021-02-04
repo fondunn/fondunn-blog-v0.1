@@ -1,6 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import ejs from 'ejs'; 
+import _ from 'lodash';
 
 const app = express();
 
@@ -19,7 +20,11 @@ app.use(express.static('public'));
 var posts = [];
 
 app.get('/', (req,res) => {
-    res.render('home', { paragraph: homeFakeText });
+    res.render('home', { 
+        paragraph: homeFakeText,
+        posts: posts 
+    });
+    
 });
 
 
@@ -41,6 +46,7 @@ app.post('/compose', (req,res) => {
         title: req.body.postTitle,
         content: req.body.postText
     };
+    posts.push(post)
     res.redirect('/');
 });
 
@@ -52,6 +58,19 @@ app.post('/compose', (req,res) => {
 
 
 
+
+app.get('/posts/:postName', (req,res) => {
+    const reqTitle = _.lowerCase(req.params.postName);
+
+    posts.forEach(function(post){
+        const storedTitle = _. lowerCase(post.title);
+
+        if(storedTitle === reqTitle){
+            console.log('200');
+        } else { console.log('404');
+        }
+    });
+});
 
 
 app.listen(3000, () => {
