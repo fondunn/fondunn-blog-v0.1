@@ -41,6 +41,10 @@ app.get('/compose', (req,res) => {
     res.render('compose');
 });
 
+app.get('/post', (req,res) => {
+    res.render('post');
+});
+
 app.post('/compose', (req,res) => {
     const post = {
         title: req.body.postTitle,
@@ -51,23 +55,17 @@ app.post('/compose', (req,res) => {
 });
 
 
-
-
-
-
-
-
-
-
 app.get('/posts/:postName', (req,res) => {
     const reqTitle = _.lowerCase(req.params.postName);
 
     posts.forEach(function(post){
-        const storedTitle = _. lowerCase(post.title);
+        const storedTitle = _.lowerCase(post.title);
 
         if(storedTitle === reqTitle){
-            console.log('200');
-        } else { console.log('404');
+            res.render('post', {
+                title: post.title,
+                content: post.content
+            }); 
         }
     });
 });
